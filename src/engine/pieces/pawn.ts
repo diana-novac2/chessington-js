@@ -32,12 +32,9 @@ export default class Pawn extends Piece {
         const upTwoSquares = new Square(currentPosition.row + 2, currentPosition.col);
         let moves: Square[] = [];
 
-        if (!board.getPiece(upOneSquare)) {
+        if (upOneSquare.isInsideBoard() && !board.getPiece(upOneSquare)) {
             moves.push(upOneSquare);
-        }
-
-        if (this.firstMove) {
-            if (!board.getPiece(upOneSquare) && !board.getPiece(upTwoSquares)) {
+            if (this.firstMove && !board.getPiece(upTwoSquares)) {
                 moves.push(upTwoSquares);
             }
         }
@@ -51,12 +48,9 @@ export default class Pawn extends Piece {
 
         let moves: Square[] = [];
 
-        if (!board.getPiece(downOneSquare)) {
+        if (downOneSquare.isInsideBoard() && !board.getPiece(downOneSquare)) {
             moves.push(downOneSquare);
-        }
-
-        if (this.firstMove) {
-            if (!board.getPiece(downOneSquare) && !board.getPiece(downTwoSquares)) {
+            if (this.firstMove && !board.getPiece(downTwoSquares)) {
                 moves.push(downTwoSquares);
             }
         }
