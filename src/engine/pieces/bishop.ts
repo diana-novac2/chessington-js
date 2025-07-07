@@ -13,13 +13,20 @@ export default class Bishop extends Piece {
         const currentPosition = board.findPiece(this);
         let bishopMoves: Square[] = [];
 
-        for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
-            for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
+        let foundObstacle = false;
+        for (let row = 0; row < GameSettings.BOARD_SIZE && !foundObstacle; row++) {
+            for (let col = 0; col < GameSettings.BOARD_SIZE && !foundObstacle; col++) {
                 let nextPosition = new Square(row, col);
-                if (this.isValidMove(currentPosition, nextPosition)) {
+                if (this.isValidMove(currentPosition, nextPosition) && !board.getPiece(nextPosition)) {
                     bishopMoves.push(nextPosition);
+                } else if (!!board.getPiece(nextPosition)) {
+                    foundObstacle = true;
                 }
             }
+        }
+
+        for (let row = currentPosition.row + 1; row < GameSettings.BOARD_SIZE && !foundObstacle; row++) {
+
         }
 
         return bishopMoves;

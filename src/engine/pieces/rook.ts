@@ -11,36 +11,43 @@ export default class Rook extends Piece {
 
     public getAvailableMoves(board: Board) {
         const currentPosition = board.findPiece(this);
-        let rookMoves: Square[] = [];
+        let moves: Square[] = [];
 
-        for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
-            const nextPosition = new Square(row, currentPosition.col);
-
-            if (currentPosition.row === row) {
-                continue;
-            }
-
-            if (board.getPiece(nextPosition)) {
+        for (let row = currentPosition.row + 1; row < GameSettings.BOARD_SIZE; row++) {
+            if (!this.checkAndAddMove(moves, row, currentPosition.col, board)) {
                 break;
             }
-
-            rookMoves.push(nextPosition);
         }
 
-        for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
-            const nextPosition = new Square(currentPosition.row, col)
-
-            if (currentPosition.col === col) {
-                continue;
-            }
-
-            if (board.getPiece(nextPosition)) {
+        for (let row = currentPosition.row - 1; row >= 0; row--) {
+            if (!this.checkAndAddMove(moves, row, currentPosition.col, board)) {
                 break;
             }
-
-            rookMoves.push(nextPosition);
         }
 
-        return rookMoves;
+        for (let col = currentPosition.col + 1; col < GameSettings.BOARD_SIZE; col++) {
+            if (!this.checkAndAddMove(moves, currentPosition.row, col, board)) {
+                break;
+            }
+        }
+
+        for (let col = currentPosition.col - 1; col >= 0; col--) {
+            if (!this.checkAndAddMove(moves, currentPosition.row, col, board)) {
+                break;
+            }
+        }
+
+        return moves;
+    }
+
+    private checkAndAddMove(moves: Square[], row: number, col: number, board: Board) {
+        const nextPosition = new Square(row, col);
+
+        if (!!board.getPiece(nextPosition)) {
+            return false;
+        }
+
+        moves.push(nextPosition);
+        return true;
     }
 }
