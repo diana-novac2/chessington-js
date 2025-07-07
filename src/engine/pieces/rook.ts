@@ -2,6 +2,7 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from "../square";
+import GameSettings from "../gameSettings";
 
 export default class Rook extends Piece {
     public constructor(player: Player) {
@@ -12,14 +13,14 @@ export default class Rook extends Piece {
         const currentPosition = board.findPiece(this);
         let rookMoves: Square[] = [];
 
-        for (let row = 0; row < 8; row++) {
+        for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
             if (currentPosition.row === row) {
                 continue;
             }
             rookMoves.push(new Square(row, currentPosition.col));
         }
 
-        for (let col = 0; col < 8; col++) {
+        for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
             if (currentPosition.col === col) {
                 continue;
             }
