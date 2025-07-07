@@ -2,6 +2,7 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from "../square";
+import GameSettings from "../gameSettings";
 
 export default class Queen extends Piece {
     public constructor(player: Player) {
@@ -13,14 +14,14 @@ export default class Queen extends Piece {
         const diagonalMoves = this.getDiagonalMoves(currentPosition);
         const straightMoves = this.getStraightMoves(currentPosition);
 
-        return diagonalMoves.concat(straightMoves);
+        return [...diagonalMoves, ...straightMoves];
     }
 
     private getDiagonalMoves(currentPosition: Square) {
         let moves: Square[] = [];
 
-        for (let row = 0; row < 8; row++) {
-            for (let col = 0; col < 8; col++) {
+        for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
+            for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
                 let nextPosition = new Square(row, col);
                 if (this.isValidDiagonal(currentPosition, nextPosition)) {
                     moves.push(nextPosition);
@@ -34,14 +35,14 @@ export default class Queen extends Piece {
     private getStraightMoves(currentPosition: Square) {
         let moves: Square[] = [];
 
-        for (let row = 0; row < 8; row++) {
+        for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
             if (currentPosition.row === row) {
                 continue;
             }
             moves.push(new Square(row, currentPosition.col));
         }
 
-        for (let col = 0; col < 8; col++) {
+        for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
             if (currentPosition.col === col) {
                 continue;
             }
