@@ -14,18 +14,31 @@ export default class Rook extends Piece {
         let rookMoves: Square[] = [];
 
         for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
+            const nextPosition = new Square(row, currentPosition.col);
+
             if (currentPosition.row === row) {
                 continue;
             }
-            rookMoves.push(new Square(row, currentPosition.col));
+
+            if (board.getPiece(nextPosition)) {
+                break;
+            }
+
+            rookMoves.push(nextPosition);
         }
 
         for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
+            const nextPosition = new Square(currentPosition.row, col)
+
             if (currentPosition.col === col) {
                 continue;
             }
 
-            rookMoves.push(new Square(currentPosition.row, col));
+            if (board.getPiece(nextPosition)) {
+                break;
+            }
+
+            rookMoves.push(nextPosition);
         }
 
         return rookMoves;
