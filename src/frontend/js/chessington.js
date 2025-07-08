@@ -64,10 +64,11 @@ function onDrop(source, target) {
     const fromSquare = positionStringToSquare(source);
     const toSquare = positionStringToSquare(target);
     const pieceToMove = board.getPiece(fromSquare);
-    
+
     if (!pieceToMove || !pieceToMove.getAvailableMoves(board).some(square => square.equals(toSquare))) {
         return 'snapback';
     }
+
     pieceToMove.moveTo(board, toSquare);
     updateStatus();
 }

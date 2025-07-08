@@ -21,31 +21,40 @@ export default class Pawn extends Piece {
         const currentPosition = board.findPiece(this);
 
         if (this.player === Player.WHITE) {
-            return this.whitePawnMoves(currentPosition);
+            return this.whitePawnMoves(currentPosition, board);
         } else {
-            return this.blackPawnMoves(currentPosition);
+            return this.blackPawnMoves(currentPosition, board);
         }
     }
 
-    private whitePawnMoves(currentPosition: Square) {
+    private whitePawnMoves(currentPosition: Square, board: Board) {
         const upOneSquare = new Square(currentPosition.row + 1, currentPosition.col);
         const upTwoSquares = new Square(currentPosition.row + 2, currentPosition.col);
+        let moves: Square[] = [];
 
-        if (this.firstMove) {
-            return [upOneSquare, upTwoSquares];
+        if (upOneSquare.isInsideBoard() && !board.getPiece(upOneSquare)) {
+            moves.push(upOneSquare);
+            if (this.firstMove && !board.getPiece(upTwoSquares)) {
+                moves.push(upTwoSquares);
+            }
         }
 
-        return [upOneSquare];
+        return moves;
     }
 
-    private blackPawnMoves(currentPosition: Square) {
+    private blackPawnMoves(currentPosition: Square, board: Board) {
         const downOneSquare = new Square(currentPosition.row - 1, currentPosition.col);
         const downTwoSquares = new Square(currentPosition.row - 2, currentPosition.col);
 
-        if (this.firstMove) {
-            return [downOneSquare, downTwoSquares];
+        let moves: Square[] = [];
+
+        if (downOneSquare.isInsideBoard() && !board.getPiece(downOneSquare)) {
+            moves.push(downOneSquare);
+            if (this.firstMove && !board.getPiece(downTwoSquares)) {
+                moves.push(downTwoSquares);
+            }
         }
 
-        return [downOneSquare];
+        return moves;
     }
 }

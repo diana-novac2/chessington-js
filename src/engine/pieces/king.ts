@@ -20,7 +20,9 @@ export default class King extends Piece {
                 const nextPosition = new Square(currentPosition.row + verticalMoves[row],
                                                 currentPosition.col + horizontalMoves[col]);
                 if (nextPosition.isInsideBoard() && !nextPosition.equals(currentPosition)) {
-                    moves.push(nextPosition);
+                    if (!board.getPiece(nextPosition)) {
+                        moves.push(nextPosition);
+                    }
                 }
             }
         }
