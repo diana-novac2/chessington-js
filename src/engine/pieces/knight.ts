@@ -25,5 +25,5 @@ export default class Knight extends Piece {
         }
 
         return moves;
-    }
+     }
 }
